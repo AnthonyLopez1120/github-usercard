@@ -2,6 +2,16 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get('https://api.github.com/users/AnthonyLopez1120')
+  .then(response =>{
+    console.log(response.data);
+    let stuff = response.data;
+    let headerDiv = document.querySelector('.cards')
+    headerDiv.appendChild(gitHubCard(stuff))
+  })
+  .catch(error => {
+    console.log("Error:", err);
+})
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -25,7 +35,48 @@
 */
 
 const followersArray = [];
+function gitHubCard(obj){
+  let card = document.createElement('div')
+  let pic = document.createElement('img')
+  let info = document.createElement('div')
+  let name = document.createElement('h3')
+  let userName = document.createElement('p')
+  let location = document.createElement('p')
+  let profile = document.createElement('p')
+  let link = document.createElement('a')
+  let followers = document.createElement('p')
+  let following = document.createElement('p')
+  let bio = document.createElement('p')
 
+  card.classList.add('card')
+  info.classList.add('card-info')
+  name.classList.add('name')
+  userName.classList.add('username')
+  
+  pic.src = obj.avatar_url
+  name.textContent = `${obj.name}`
+  userName.textContent= `${obj.login}`
+  location.textContent = `Location: ${obj.location}`
+  profile.textContent = "Profile: "
+  link.textContent = obj.html_url
+  link.href = obj.html_url
+  followers.textContent = `Followers: ${obj.followers}`
+  following.textContent = `Following: ${obj.following}`
+  bio.textContent = `Bio: ${obj.bio}`
+
+  card.appendChild(pic)
+  card.appendChild(info)
+    info.appendChild(name)
+    info.appendChild(userName)
+    info.appendChild(location)
+    info.appendChild(profile)
+      profile.appendChild(link)
+    info.appendChild(followers)
+    info.appendChild(following)
+    info.appendChild(bio)
+
+  return card;
+}
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
